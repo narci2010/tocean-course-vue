@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue Class 与 Style 绑定 - 拓胜教程(toceansoft.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="watch-example">
+        <div v-bind:class="{ active: isActive }">拓胜科技</div>
+        <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">荣誉出品
+        </div>
+        <div v-bind:class="classObject">对象属性</div>
+        <div v-bind:class="classObjectComputed">计算属性</div>
+        <div v-bind:class="[activeClass, errorClass]"></div>
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+        <div v-bind:class="[{ active: isActive }, errorClass]"></div>
+        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">拓胜科技</div>
+        <div v-bind:style="styleObject">荣誉出品</div>
+        <div v-bind:style="[baseStyles, overridingStyles]">拓胜科技，IT工程师的摇篮</div>
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">For u Infomation</div>
+    </div>
+
+    <script>
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                isActive: true,
+                hasError: false,
+                classObject: {
+                    active: true,
+                    'text-danger': false
+                },
+                error: null,
+                activeClass: 'active',
+                errorClass: 'text-danger',
+                activeColor: 'red',
+                fontSize: 30,
+                styleObject: {
+                    color: 'red',
+                    fontSize: '13px'
+                },
+                baseStyles: {
+                    color: 'yellow',
+                },
+                overridingStyles: {
+                    fontSize: '18px'
+                }
+            },
+            computed: {
+                classObjectComputed: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
