@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 模板语法 - 拓胜教程(toceansoft.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    </div>
+    <script>
+        var data = {
+            a: 1,
+            msg: 'toceansoft',
+            rawHtml:'<span style="color:blue">拓胜科技将成为全世界最顶级的IT培训公司和外包服务提供商。</span>'
+        }
+        var vm = new Vue({
+            el: '#example',
+            data: data
+        })
+    </script>
+</body>
+
+</html>

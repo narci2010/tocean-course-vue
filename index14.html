@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 指令 - 拓胜教程(toceansoft.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        <p v-if="seen">现在你看到我了</p>
+        <a v-bind:href="url">拓胜官网</a>
+        <a :href="url2">全栈程序猿</a>
+        <a v-on:click="doSomething" href='#'>调用doSomething函数</a>
+        <form v-on:submit.prevent="onSubmit">
+            <input type="text" />
+            <input type="button" v-on:submit="doIt" value="提交" />
+        </form>
+    </div>
+    <script>
+        var data = {
+            seen: true,
+            url: 'http://www.toceansoft.com',
+            url2: 'https://www.gotofullstack.com'
+        }
+        var vm = new Vue({
+            el: '#example',
+            data: data,
+            methods: {
+                doSomething() {
+                    alert('doSomething')
+                },
+                doIt() {
+                    alert('do it!')
+                }
+
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 数据与方法 - 拓胜教程(toceansoft.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app-7">
+        <p>{{ a }}</p>
+        <input v-model="a">
+    </div>
+
+    <script>
+        // 我们的数据对象
+        var data = { a: 1 }
+
+        // 该对象被加入到一个 Vue 实例中
+        var vm = new Vue({
+            el: '#app-7',
+            data: data
+        })
+
+        // 获得这个实例上的属性
+        // 返回源数据中对应的字段
+        console.log(vm.a == data.a) // => true
+
+        // 设置属性也会影响到原始数据
+        vm.a = 2
+        console.log(data.a) // => 2
+
+        // ……反之亦然
+        data.a = 3
+        console.log(vm.a) // => 3
+    </script>
+</body>
+
+</html>
