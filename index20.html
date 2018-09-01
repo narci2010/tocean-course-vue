@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 列表渲染 - 拓胜教程(toceansoft.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        <li v-for="item in items">
+            {{ item.message }}
+        </li>
+        <li v-for="(item, index) in items">
+            {{ parentMessage }} - {{ index }} - {{ item.message }}
+        </li>
+        <li v-for="value in object">
+            {{ value }}
+        </li>
+        <div v-for="item in items2" :key="item.id">
+            {{ item.id }}, {{ item.msg }}
+        </div>
+        <li v-for="(value,key) in userProfile">
+            {{ key }}:{{ value }}
+        </li>
+        <li v-for="n in evenNumbers">{{ n }}</li>
+        <li v-for="n in even(numbers)">{{ n }}</li>
+        <div>
+            <span v-for="n in 10">{{ n }} </span>
+        </div>
+        <ul>
+            <template v-for="item in items">
+                <li>{{ item.message }}</li>
+                <li class="divider" role="presentation"></li>
+            </template>
+        </ul>
+        <li v-for="todo in todos" v-if="!todo.isComplete">
+            {{ todo }}
+        </li>
+        <ul v-if="todos.length">
+            <li v-for="todo in todos">
+                {{ todo }}
+            </li>
+        </ul>
+        <p v-else>No todos left!</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#example',
+            data: {
+                parentMessage: 'Parent',
+                items: [
+                    { message: 'Foo' },
+                    { message: 'Bar' }
+                ],
+                items2: [
+                    { msg: 'msg1', id: 1 },
+                    { msg: 'msg2', id: 2 }
+                ],
+                object: {
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    age: 30
+                },
+                userProfile: {
+                    name: 'Anika'
+                },
+                numbers: [1, 2, 3, 4, 5],
+                todos: [
+                    { isComplete: false, name: 'item1' },
+                    { isComplete: true, name: 'item2' },
+                    { isComplete: false, name: 'item3' },
+                    { isComplete: true, name: 'item4' }
+                ],
+            },
+            computed: {
+                evenNumbers: function () {
+                    return this.numbers.filter(function (number) {
+                        return number % 2 === 0
+                    })
+                }
+            },
+            methods: {
+                even: function (numbers) {
+                    return numbers.filter(function (number) {
+                        return number % 2 === 0
+                    })
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
