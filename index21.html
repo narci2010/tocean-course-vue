@@ -102,9 +102,14 @@
                 parentClick() {
                     alert('do This parentClick!')
                 },
-                onScroll() {
-                    alert('do  onScroll!')
+                 onScroll() {
+                //async函数才能用await this.sleep(5000);
+                    // alert('do  onScroll ...!')
+                },
+                sleep: function (ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms))
                 }
+
             }
         })
     </script>

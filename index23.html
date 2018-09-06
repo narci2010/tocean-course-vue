@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 组件基础 - 拓胜教程(toceansoft.com)</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <style type="text/css">
+        .tab-button {
+            padding: 6px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-bottom: -1px;
+            margin-right: -1px;
+        }
+
+        .tab-button:hover {
+            background: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background: #e0e0e0;
+        }
+
+        .tab {
+            border: 1px solid #ccc;
+            padding: 10px;
+    </style>
+</head>
+
+<body>
+    <div id="components-demo">
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+
+        <blog-post title="My journey with Vue"></blog-post>
+        <blog-post title="Blogging with Vue"></blog-post>
+        <blog-post title="Why Vue is so fun"></blog-post>
+
+        <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:title="post.title"></blog-post>
+        <blog-post2 v-for="post in posts" v-bind:key="post.id" v-bind:post="post"></blog-post2>
+
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post2 v-for="post in posts" v-bind:key="post.id" v-bind:post="post"></blog-post2>
+        </div>
+
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post3 v-for="post in posts" v-bind:key="post.id" v-bind:post="post" v-on:enlarge-text="postFontSize += 0.1"></blog-post3>
+        </div>
+        <custom-input v-model="searchText"></custom-input>
+        <span>{{searchText}}</span>
+        <alert-box>
+            Something bad happened.
+        </alert-box>
+        <div id="dynamic-component-demo" class="demo">
+            <button v-for="tab in tabs" v-bind:key="tab" v-bind:class="['tab-button', { active: currentTab === tab }]" v-on:click="currentTab = tab">{{
+                tab }}</button>
+
+            <component v-bind:is="currentTabComponent" class="tab"></component>
+        </div>
+        <component-a></component-a>
+    </div>
+    <script>
+        // 定义一个名为 button-counter 的新组件
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
+        Vue.component('blog-post', {
+            props: ['title'],
+            template: '<h3>{{ title }}</h3>'
+        })
+
+        Vue.component('blog-post2', {
+            props: ['post'],
+            template: `<div class="blog-post"><h3>{{ post.title }}</h3><div v-html="post.content"></div></div>`
+        })
+        Vue.component('blog-post3', {
+            props: ['post'],
+            template: `
+    <div class="blog-post">
+      <h3>{{ post.title }}</h3>
+      <button v-on:click="$emit('enlarge-text')">
+  Enlarge text
+</button>
+      <div v-html="post.content"></div>
+    </div>
+  `
+        })
+        Vue.component('custom-input', {
+            props: ['value'],
+            template: `
+    <input
+      v-bind:value="value"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+        })
+        Vue.component('alert-box', {
+            template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <slot></slot>
+    </div>
+  `
+        })
+        Vue.component('tab-home', {
+            template: '<div>Home component</div>'
+        })
+        Vue.component('tab-posts', {
+            template: '<div>Posts component</div>'
+        })
+        Vue.component('tab-archive', {
+            template: '<div>Archive component</div>'
+        })
+        var ComponentA = {
+            template: `<div>这是一个局部的自定义组件，只能在当前Vue实例中使用</div>`,
+
+        }
+        new Vue({
+            el: '#components-demo',
+            components: {
+                ComponentA
+            },
+            data: {
+                posts: [
+                    { id: 1, title: 'My journey with Vue', content: 'content1' },
+                    { id: 2, title: 'Blogging with Vue', content: 'content2' },
+                    { id: 3, title: 'Why Vue is so fun', content: 'content3' }
+                ],
+                postFontSize: 2,
+                searchText: '',
+                currentTab: 'Home',
+                tabs: ['Home', 'Posts', 'Archive']
+            },
+            computed: {
+                currentTabComponent: function () {
+                    return 'tab-' + this.currentTab.toLowerCase()
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
